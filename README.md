@@ -7,7 +7,7 @@ mongodb
 async
 ```
 MongoDB needs to run on port ```27017``` (default port) and have a database called ``` creatourn ```.
-<br> The app runs on ``` http://localhost:2000 ``` and accepts connection from ```http://localhost:3000```.
+<br> The app runs on ``` http://localhost:2000 ``` and accepts connections from ```http://localhost:3000```.
 
 ### API
 ##### Templates
@@ -15,3 +15,12 @@ MongoDB needs to run on port ```27017``` (default port) and have a database call
 <br> ``` POST: http://localhost:2000/templates/ ```
 <br> ``` PUT: http://localhost:2000/templates/:id ```
 <br> ``` DELETE: http://localhost:2000/templates/:id ```
+
+<p> Responses are in following format:
+```
+{
+  success: 'true/false',
+  message: 'error message',
+  data: 'response data'
+}
+```
