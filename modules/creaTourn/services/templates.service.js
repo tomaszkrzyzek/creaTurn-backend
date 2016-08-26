@@ -8,12 +8,12 @@ module.exports = {
     createTemplate: createTemplate
 };
 
+var databaseUrl = 'mongodb://localhost:27017/creatourn';
+
 function getTemplate(id) {
-    return {
-        'id': id
-    };
+
 }
 
-function createTemplate() {
-    return false;
+function createTemplate(){
+
 }
