@@ -18,6 +18,14 @@ module.exports = {
 
 var databaseUrl = 'mongodb://localhost:27017/creatourn';
 
+function createResponseJson(success, message, data) {
+    return {
+        'success': success,
+        'message': message,
+        'data': data
+    };
+}
+
 function getTemplate(req, res, next) {
     var id = req.params.id;
     async.waterfall([
@@ -33,12 +41,12 @@ function getTemplate(req, res, next) {
                 '_id': ObjectID(id)
             }, function(err, result) {
                 if (err) {
-                    res.sendStatus(500);
+                    res.send(createResponseJson(false, '500', ''));
                 }
                 if (!result) {
-                    res.sendStatus(404);
+                    res.send(createResponseJson(false, '404', ''));
                 } else {
-                    res.send(result);
+                    res.send(createResponseJson(true, '', result));
                     done(null, res);
                 }
             });
@@ -74,12 +82,12 @@ function createTemplate(req, res, next) {
                 '_id': ObjectID(insertedId)
             }, function(err, result) {
                 if (err) {
-                    res.sendStatus(500);
+                    res.send(createResponseJson(false, '500', ''));
                 }
                 if (!result) {
-                    res.sendStatus(404);
+                    res.send(createResponseJson(false, '404', ''));
                 } else {
-                    res.send(result);
+                    res.send(createResponseJson(true, '', result));
                     done(null, res);
                 }
             });
@@ -106,21 +114,21 @@ function updateTemplate(req, res, next) {
                 '_id': ObjectID(id)
             }, newTemplate, function(err, result) {
                 if (err) {
-                    res.sendStatus(500);
+                    res.send(createResponseJson(false, '500', ''));
                 }
                 if (!result) {
-                    res.sendStatus(404);
+                    res.send(createResponseJson(false, '404', ''));
                 } else {
                     collection.findOne({
                         '_id': ObjectID(id)
                     }, function(err, result) {
                         if (err) {
-                            res.sendStatus(500);
+                            res.send(createResponseJson(false, '500', ''));
                         }
                         if (!result) {
-                            res.sendStatus(404);
+                            res.send(createResponseJson(false, '404', ''));
                         } else {
-                            res.send(result);
+                            res.send(createResponseJson(true, '', result));
                         }
                     });
                     done(null, result);
@@ -148,14 +156,12 @@ function deleteTemplate(req, res, next) {
                 '_id': ObjectID(id)
             }, function(err, result) {
                 if (err) {
-                    res.sendStatus(500);
+                    res.send(createResponseJson(false, '500', ''));
                 }
                 if (!result) {
-                    res.sendStatus(404);
+                    res.send(createResponseJson(false, '404', ''));
                 } else {
-                    res.send({
-                      success: true
-                    });
+                    res.send(createResponseJson(true, '', ''));
                 }
                 done(null, result);
             });
