@@ -12,7 +12,8 @@ var bodyParser = require('body-parser');
 module.exports = {
     getTemplate: getTemplate,
     createTemplate: createTemplate,
-    updateTemplate: updateTemplate
+    updateTemplate: updateTemplate,
+    deleteTemplate: deleteTemplate
 };
 
 var databaseUrl = 'mongodb://localhost:27017/creatourn';
@@ -124,6 +125,39 @@ function updateTemplate(req, res, next) {
                     });
                     done(null, result);
                 }
+            });
+        }
+    ], function(err, result) {
+        assert.equal(null, err);
+    });
+}
+
+function deleteTemplate(req, res, next) {
+    var id = req.params.id;
+
+    async.waterfall([
+        function dbConnect(done) {
+            MongoClient.connect(databaseUrl, function(err, db) {
+                assert.equal(null, err);
+                var collection = db.collection('templates');
+                done(null, db, collection);
+            });
+        },
+        function(db, collection, done) {
+            collection.remove({
+                '_id': ObjectID(id)
+            }, function(err, result) {
+                if (err) {
+                    res.sendStatus(500);
+                }
+                if (!result) {
+                    res.sendStatus(404);
+                } else {
+                    res.send({
+                      success: true
+                    });
+                }
+                done(null, result);
             });
         }
     ], function(err, result) {

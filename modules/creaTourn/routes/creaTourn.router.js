@@ -9,3 +9,4 @@ var templatesController = require('./../controllers/templates.controller');
 creaTournRouter.get('/templates/:id', templatesController.getTemplate);
 creaTournRouter.post('/templates', templatesController.createTemplate);
 creaTournRouter.put('/templates/:id', templatesController.updateTemplate);
+creaTournRouter.delete('/templates/:id', templatesController.deleteTemplate);
