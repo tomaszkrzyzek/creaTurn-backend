@@ -1,4 +1,7 @@
 # creaTurn-backend
+
+Early version of creaTourn backend, a web app for managing tournaments.
+
 Dependencies to install:
 ```
 node
